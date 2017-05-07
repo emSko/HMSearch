@@ -33,6 +33,9 @@ namespace HarmonySearchAlg
             this.numberOfRunds = numberOfRunds;
             hsMemory = new double[HMMatrixSize, numberOfDesignVar];
             bounds = new List<double>();
+            this.HMMatrixSize = HMMatrixSize;
+            this.HMCR = HMCR;
+            this.PAR = PAR;
         }
 
         private void Initialize()
