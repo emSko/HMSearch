@@ -27,6 +27,9 @@ namespace HarmonySearchAlg
         {
             this.objectiveFunction = objectiveFunction;
             this.numberOfRunds = numberOfRunds;
+            this.HMMatrixSize = HMMatrixSize;
+            this.HMCR = HMCR;
+            this.PAR = PAR;
         }
     }
 }
