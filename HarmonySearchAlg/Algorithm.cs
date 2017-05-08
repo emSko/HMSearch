@@ -22,14 +22,31 @@ namespace HarmonySearchAlg
         //opis problemu
         private string objectiveFunction;//funkja celu
 
-        public Algorithm(string objectiveFunction, int numberOfRunds=50000, int HMMatrixSize=20,
+        double[,] hsMemory; // pamieć Harmony Search
+        List<double> bounds; // minimum i maksimum zmienności
+
+
+        public Algorithm(string objectiveFunction, int numberOfDesignVar, int numberOfRunds=50000, int HMMatrixSize=20,
                             double HMCR=0.9,double PAR=0.35)
         {
             this.objectiveFunction = objectiveFunction;
             this.numberOfRunds = numberOfRunds;
+            hsMemory = new double[HMMatrixSize, numberOfDesignVar];
+            bounds = new List<double>();
             this.HMMatrixSize = HMMatrixSize;
             this.HMCR = HMCR;
             this.PAR = PAR;
+        }
+
+        private void Initialize()
+        {
+            // inicjalizacja struktur
+           
+            Random rnd = new Random();
+
+            for (int r = 0; r < HMMatrixSize; r++)	// wypełnienie pamięci losowymi wartościami
+                for (int c = 0; c < numberOfDesignVar; c++)
+                    hsMemory[r, c] = rnd.Next( /*zakres zmiennosci*/);
         }
     }
 }
