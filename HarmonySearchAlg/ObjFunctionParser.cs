@@ -16,6 +16,7 @@ namespace HarmonySearchAlg
             this.function = function;
         }
 
+        //funckja zwraca listę zawierającą wszytskie zmienne decyzyjne
         public List<string> getDesignVariables()
         {
             List<string> variables = new List<string>();
@@ -29,5 +30,16 @@ namespace HarmonySearchAlg
             return variables;
         }
 
+        //funkcja podstawia za zmienne  
+        public string getFilledObjFuntion(Dictionary<string,double> varValues)
+        {
+            string filledFunction = this.function;
+            List<string> vars = getDesignVariables();
+            foreach(string v in vars)
+            {
+                filledFunction = filledFunction.Replace(v, varValues[v].ToString());
+            }
+            return filledFunction;
+        }
     }
 }
