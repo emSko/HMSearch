@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -18,7 +19,15 @@ namespace HarmonySearchAlg
             ObjFunctionParser obj = new ObjFunctionParser(textBoxFunction.Text);
             var variables = obj.getDesignVariables();
             int amountOfVariables = variables.Count();
-            Algorithm algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables);
+
+            Dictionary<string, double> minValues = new Dictionary<string, double>();
+            Dictionary<string, double> maxValues = new Dictionary<string, double>();
+            minValues.Add("x1", 123);
+            maxValues.Add("x1", 3454);
+            minValues.Add("x2", 666);
+            maxValues.Add("x2", 999);
+
+            Algorithm algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
 
             for (int i=1; i<=variables.Count; i++)
             {

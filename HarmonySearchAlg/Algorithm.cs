@@ -29,7 +29,7 @@ namespace HarmonySearchAlg
         Dictionary<string, double> maxValues;
 
 
-        public Algorithm(string objectiveFunction, int numberOfDesignVar, int numberOfRunds=50000, int HMMatrixSize=20,
+        public Algorithm(string objectiveFunction, int numberOfDesignVar, Dictionary<string, double> minValues, Dictionary<string, double> maxValues, int numberOfRunds=50000, int HMMatrixSize=20,
                             double HMCR=0.9,double PAR=0.35)
         {
             this.numberOfDesignVar = numberOfDesignVar;
@@ -39,7 +39,8 @@ namespace HarmonySearchAlg
             this.HMMatrixSize = HMMatrixSize;
             this.HMCR = HMCR;
             this.PAR = PAR;
-            // 
+            this.minValues = new Dictionary<string, double>(minValues);
+            this.maxValues = new Dictionary<string, double>(maxValues);
         }
 
         private void Initialize()
