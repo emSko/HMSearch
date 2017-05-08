@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HarmonySearchAlg
 {
-    class ObjFunctionParser
+    public class ObjFunctionParser
     {
         private string function;
         char[] separatingChars = { '+', '-', '*', '/', '^'};
