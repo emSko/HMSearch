@@ -321,6 +321,7 @@
             this.buttonMinMax.TabIndex = 40;
             this.buttonMinMax.Text = "Dodaj min i max";
             this.buttonMinMax.UseVisualStyleBackColor = true;
+            this.buttonMinMax.Click += new System.EventHandler(this.buttonMinMax_Click);
             // 
             // labelMax
             // 

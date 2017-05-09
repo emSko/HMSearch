@@ -7,6 +7,9 @@ namespace HarmonySearchAlg
 {
     public partial class Form1 : Form
     {
+        int amountOfVariables;
+        List<string> variables;
+
         public Form1()
         {
             InitializeComponent();
@@ -17,17 +20,8 @@ namespace HarmonySearchAlg
         {
             HideControls();
             ObjFunctionParser obj = new ObjFunctionParser(textBoxFunction.Text);
-            var variables = obj.getDesignVariables();
-            int amountOfVariables = variables.Count();
-
-            Dictionary<string, double> minValues = new Dictionary<string, double>();
-            Dictionary<string, double> maxValues = new Dictionary<string, double>();
-            minValues.Add("x1", 123);
-            maxValues.Add("x1", 3454);
-            minValues.Add("x2", 666);
-            maxValues.Add("x2", 999);
-
-            Algorithm algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
+            variables = obj.getDesignVariables();
+            amountOfVariables = variables.Count();
 
             for (int i=1; i<=variables.Count; i++)
             {
@@ -81,6 +75,22 @@ namespace HarmonySearchAlg
 
             labelMax.Hide();
             labelMin.Hide();
+        }
+
+        private void buttonMinMax_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, double> minValues = new Dictionary<string, double>();
+            Dictionary<string, double> maxValues = new Dictionary<string, double>();
+
+            for (int i=1; i<=amountOfVariables; i++)
+            {
+                var minValue = ((TextBox)Form1.ActiveForm.Controls.Find("textBox" + i, true)[0]).Text;
+                var maxValue = ((TextBox)Form1.ActiveForm.Controls.Find("textBox" + i + i, true)[0]).Text;
+                minValues.Add(variables[i - 1],Convert.ToDouble(minValue));
+                maxValues.Add(variables[i - 1], Convert.ToDouble(maxValue));
+            }
+
+            Algorithm algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
         }
     }
 }
