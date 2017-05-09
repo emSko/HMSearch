@@ -26,19 +26,24 @@ namespace HarmonySearchAlg
         private string objectiveFunction;//funkja celu
 
         double[,] hsMemory; // pamieć Harmony Search
-        List<double> bounds; // minimum i maksimum zmienności
+
+        // minimum i maksimum zmienności
+        Dictionary<string, double> minValues;
+        Dictionary<string, double> maxValues;
 
 
-        public Algorithm(string objectiveFunction, int numberOfDesignVar, int numberOfRunds=50000, int HMMatrixSize=20,
+        public Algorithm(string objectiveFunction, int numberOfDesignVar, Dictionary<string, double> minValues, Dictionary<string, double> maxValues, int numberOfRunds=50000, int HMMatrixSize=20,
                             double HMCR=0.9,double PAR=0.35)
         {
+            this.numberOfDesignVar = numberOfDesignVar;
             this.objectiveFunction = objectiveFunction;
             this.numberOfRunds = numberOfRunds;
             hsMemory = new double[HMMatrixSize, numberOfDesignVar];
-            bounds = new List<double>();
             this.HMMatrixSize = HMMatrixSize;
             this.HMCR = HMCR;
             this.PAR = PAR;
+            this.minValues = new Dictionary<string, double>(minValues);
+            this.maxValues = new Dictionary<string, double>(maxValues);
             functionParser = new ObjFunctionParser(this.objectiveFunction);
         }
 
