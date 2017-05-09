@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HarmonySearchAlg
 {
-    class Algorithm
+    public class Algorithm
     {
+        private ObjFunctionParser functionParser;
+
         private int numberOfRunds; //kryterium przerwania algorytmu - ilość rund
 
         //parametry macierzy pamięci harmonii
@@ -36,6 +39,7 @@ namespace HarmonySearchAlg
             this.HMMatrixSize = HMMatrixSize;
             this.HMCR = HMCR;
             this.PAR = PAR;
+            functionParser = new ObjFunctionParser(this.objectiveFunction);
         }
 
         private void Initialize()
@@ -48,5 +52,14 @@ namespace HarmonySearchAlg
                 for (int c = 0; c < numberOfDesignVar; c++)
                     hsMemory[r, c] = rnd.Next( /*zakres zmiennosci*/);
         }
+
+        public double computeObjectiveFunction(Dictionary<string, double> varValues)
+        {
+            DataTable dt = new DataTable();
+
+            var resultOfFunction = dt.Compute(functionParser.getFilledObjFuntion(varValues),"");
+            return Convert.ToDouble(resultOfFunction);
+        }
+
     }
 }

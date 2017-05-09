@@ -54,5 +54,36 @@ namespace HarmonySearchAlg.Tests
             string actual = sut.getFilledObjFuntion(dic);
             Assert.AreEqual(excepted, actual);
         }
+
+        [TestMethod()]
+        public void replacePowOperatorForOneVariable()
+        {
+            string function = "x1^2";
+            string excepted = "x1*x1";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.replacePowOperator();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void replacePowOperatorForFunction()
+        {
+            string function = "x1+4*10+x2^2";
+            string excepted = "x1+4*10+x2*x2";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.replacePowOperator();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void replacePowOperatorForComplicatedFunction()
+        {
+            string function = "x1+4*10+x2^2+x3^4/9+x1^3/x2^2";
+            string excepted = "x1+4*10+x2*x2+x3*x3*x3*x3/9+x1*x1*x1/x2*x2";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.replacePowOperator();
+            Assert.AreEqual(excepted, actual);
+        }
+
     }
 }
