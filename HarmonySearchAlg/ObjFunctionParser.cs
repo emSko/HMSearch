@@ -9,11 +9,13 @@ namespace HarmonySearchAlg
     public class ObjFunctionParser
     {
         private string function;
-        char[] separatingChars = { '+', '-', '*', '/', '^'};
+        char[] separatingChars = { '+', '-', '*', '/', '^', ')', '(' };
 
         public ObjFunctionParser(string function)
         {
             this.function = function;
+            if (this.function.Contains('^'))
+                this.function = replacePowOperator();
         }
 
         //funckja zwraca listę zawierającą wszytskie zmienne decyzyjne
@@ -57,13 +59,18 @@ namespace HarmonySearchAlg
 
                 string[] p1 = pieces[i].Split(separatingChars,
                             System.StringSplitOptions.RemoveEmptyEntries);
-                string [] p2 = pieces[i + 1].Split(separatingChars,
+
+                result = result.Substring(0, result.Length - p1[p1.Length-1].Length);
+                result = result + '(' + p1[p1.Length - 1];
+
+                string[] p2 = pieces[i + 1].Split(separatingChars,
                             System.StringSplitOptions.RemoveEmptyEntries);
                 string number = p1[p1.Length - 1];
                 for(int j=0; j<Convert.ToInt32(p2[0])-1; j++)
                 {
                     result = result + "*" + number;
                 }
+                result = result + ')';
                 pieces[i + 1] = pieces[i + 1].Substring(p2[0].Length);
             }
             result = result + pieces[pieces.Length - 1];

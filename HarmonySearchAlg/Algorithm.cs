@@ -61,7 +61,6 @@ namespace HarmonySearchAlg
         public double computeObjectiveFunction(Dictionary<string, double> varValues)
         {
             DataTable dt = new DataTable();
-
             var resultOfFunction = dt.Compute(functionParser.getFilledObjFuntion(varValues),"");
             return Convert.ToDouble(resultOfFunction);
         }

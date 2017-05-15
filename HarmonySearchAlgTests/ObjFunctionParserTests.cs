@@ -45,8 +45,8 @@ namespace HarmonySearchAlg.Tests
         [TestMethod()]
         public void substitiutFunctionVariables()
         {
-            string function = "x1+4*10+x2^2";
-            string excepted = "2+4*10+5^2";
+            string function = "x1+4*10+(x2*x2)";
+            string excepted = "2+4*10+(5*5)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             Dictionary<string, double> dic = new Dictionary<string, double>();
             dic.Add("x1",2);
@@ -55,11 +55,25 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+
+        [TestMethod()]
+        public void substitiutFunctionVariablesWithMultiply()
+        {
+            string function = "x1+4*10+x2+3*x2";
+            string excepted = "2+4*10+5+3*5";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            Dictionary<string, double> dic = new Dictionary<string, double>();
+            dic.Add("x1", 2);
+            dic.Add("x2", 5);
+            string actual = sut.getFilledObjFuntion(dic);
+            Assert.AreEqual(excepted, actual);
+        }
+
         [TestMethod()]
         public void replacePowOperatorForOneVariable()
         {
             string function = "x1^2";
-            string excepted = "x1*x1";
+            string excepted = "(x1*x1)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             string actual = sut.replacePowOperator();
             Assert.AreEqual(excepted, actual);
@@ -69,7 +83,7 @@ namespace HarmonySearchAlg.Tests
         public void replacePowOperatorForFunction()
         {
             string function = "x1+4*10+x2^2";
-            string excepted = "x1+4*10+x2*x2";
+            string excepted = "x1+4*10+(x2*x2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             string actual = sut.replacePowOperator();
             Assert.AreEqual(excepted, actual);
@@ -79,7 +93,7 @@ namespace HarmonySearchAlg.Tests
         public void replacePowOperatorForComplicatedFunction()
         {
             string function = "x1+4*10+x2^2+x3^4/9+x1^3/x2^2";
-            string excepted = "x1+4*10+x2*x2+x3*x3*x3*x3/9+x1*x1*x1/x2*x2";
+            string excepted = "x1+4*10+(x2*x2)+(x3*x3*x3*x3)/9+(x1*x1*x1)/(x2*x2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             string actual = sut.replacePowOperator();
             Assert.AreEqual(excepted, actual);
