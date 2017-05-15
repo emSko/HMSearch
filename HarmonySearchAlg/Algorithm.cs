@@ -47,15 +47,26 @@ namespace HarmonySearchAlg
             functionParser = new ObjFunctionParser(this.objectiveFunction);
         }
 
-        private void Initialize()
+        public void InitializeHSM()
         {
             // inicjalizacja struktur
            
             Random rnd = new Random();
+            List<string> vars = functionParser.getDesignVariables();
 
-            for (int r = 0; r < HMMatrixSize; r++)	// wypełnienie pamięci losowymi wartościami
+            int c = 0; //collumn - kazda kolumna repreezentuje inna zmienna decyzyjna
+            foreach(var v in vars)
+            {
+                for(int r=0; r<HMMatrixSize;++r) //r-row kazdy wiersz to inne rozwiazanie
+                {
+                    hsMemory[r, c] = rnd.NextDouble() * (maxValues[v] - minValues[v]) + minValues[v];
+                }
+                ++c;
+            }
+
+           /* for (int r = 0; r < HMMatrixSize; r++)	// wypełnienie pamięci losowymi wartościami
                 for (int c = 0; c < numberOfDesignVar; c++)
-                    hsMemory[r, c] = rnd.Next( /*zakres zmiennosci*/);
+                    hsMemory[r, c] = rnd.Next( /*zakres zmiennosci);*/
         }
 
         public double computeObjectiveFunction(Dictionary<string, double> varValues)

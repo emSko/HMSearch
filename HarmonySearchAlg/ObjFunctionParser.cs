@@ -36,22 +36,6 @@ namespace HarmonySearchAlg
         public string replacePowOperator()
         {
             string result = "";
-            /*string[] words = function.Split('^');
-            for (int i=0; i<(words.Length-1); ++i)
-            {
-                string[] w1 = words[i].Split(separatingChars,
-                             System.StringSplitOptions.RemoveEmptyEntries);
-                words[i] = words[i].Substring(0, words[i].Length - w1[w1.Length - 1].Length);
-                if (result != "")
-                  result=result.Substring(0, result.Length-w1[0].Length-1);
-
-                result = result + words[i];
-                result = result + "Pow("+ w1[w1.Length - 1]+",";
-                string[] w2 = words[i+1].Split(separatingChars,
-                            System.StringSplitOptions.RemoveEmptyEntries);
-                words[i + 1] = words[i + 1].Substring(w2[0].Length);
-                result = result + w2[0] + ")" + words[i + 1];
-            }*/
             string[] pieces = function.Split('^');
             for(int i = 0;i<(pieces.Length-1);++i)
             {

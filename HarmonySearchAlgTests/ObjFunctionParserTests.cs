@@ -14,7 +14,7 @@ namespace HarmonySearchAlg.Tests
         [TestMethod()]
         public void getTheSameVariablesList()
         {
-            string function = "x1+4*10+x2^2+x3-4/x4";
+            string function = "x1+4*10+x2^2+x3-4/x4+x1";
             List<string> excepted = new List<string>(new string[] { "x1", "x2", "x3","x4"});
             ObjFunctionParser sut = new ObjFunctionParser(function);
             List<string> actual = sut.getDesignVariables();

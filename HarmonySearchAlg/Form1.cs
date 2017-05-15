@@ -91,6 +91,7 @@ namespace HarmonySearchAlg
             }
 
             Algorithm algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
+            algorithm.InitializeHSM();
         }
     }
 }
