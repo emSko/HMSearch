@@ -71,6 +71,7 @@ namespace HarmonySearchAlg
             {
                 filledFunction = filledFunction.Replace(v, varValues[v].ToString());
             }
+            filledFunction = filledFunction.Replace(',', '.');
             return filledFunction;
         }
     }

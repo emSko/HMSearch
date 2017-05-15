@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NCalc;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace HarmonySearchAlg
         //opis problemu
         private string objectiveFunction;//funkja celu
 
-        double[,] hsMemory; // pamieć Harmony Search
+        List<Dictionary<string, double>> hsMemory;
+        //double[,] hsMemory; // pamieć Harmony Search
 
         // minimum i maksimum zmienności
         Dictionary<string, double> minValues;
@@ -38,7 +40,8 @@ namespace HarmonySearchAlg
             this.numberOfDesignVar = numberOfDesignVar;
             this.objectiveFunction = objectiveFunction;
             this.numberOfRunds = numberOfRunds;
-            hsMemory = new double[HMMatrixSize, numberOfDesignVar];
+            hsMemory = new List<Dictionary<string, double>>();
+           // hsMemory = new double[HMMatrixSize, numberOfDesignVar+1]; //ilos kolumn to iolsc zmiennych decyzyjnych + 1 kolumna na wynik funkcji celu
             this.HMMatrixSize = HMMatrixSize;
             this.HMCR = HMCR;
             this.PAR = PAR;
@@ -46,6 +49,12 @@ namespace HarmonySearchAlg
             this.maxValues = new Dictionary<string, double>(maxValues);
             functionParser = new ObjFunctionParser(this.objectiveFunction);
         }
+
+        public void sortHSMemory()
+        {
+            hsMemory.Sort((x, y) => ((double)x["functionVal"]).CompareTo((double)y["functionVal"]));
+        }
+
 
         public void InitializeHSM()
         {
@@ -55,14 +64,30 @@ namespace HarmonySearchAlg
             List<string> vars = functionParser.getDesignVariables();
 
             int c = 0; //collumn - kazda kolumna repreezentuje inna zmienna decyzyjna
-            foreach(var v in vars)
+
+            for(int r = 0; r<HMMatrixSize;++r)
+            {
+                hsMemory.Add(new Dictionary<string, double>());
+                foreach (var v in vars)
+                {
+                    double value = rnd.NextDouble() * (maxValues[v] - minValues[v]) + minValues[v];
+                    hsMemory[r].Add(v, value);
+                }
+                double valObjectiveFunc = computeObjectiveFunction(hsMemory[r]);
+                hsMemory[r].Add("functionVal", valObjectiveFunc);
+            }
+
+            sortHSMemory();
+           /* foreach(var v in vars)
             {
                 for(int r=0; r<HMMatrixSize;++r) //r-row kazdy wiersz to inne rozwiazanie
                 {
-                    hsMemory[r, c] = rnd.NextDouble() * (maxValues[v] - minValues[v]) + minValues[v];
+                    hsMemory[r][c] = rnd.NextDouble() * (maxValues[v] - minValues[v]) + minValues[v];
                 }
                 ++c;
-            }
+            }*/
+
+            //obliczenie wartosci funckji celu dla kazdego rozwiazania
 
            /* for (int r = 0; r < HMMatrixSize; r++)	// wypełnienie pamięci losowymi wartościami
                 for (int c = 0; c < numberOfDesignVar; c++)
@@ -71,8 +96,7 @@ namespace HarmonySearchAlg
 
         public double computeObjectiveFunction(Dictionary<string, double> varValues)
         {
-            DataTable dt = new DataTable();
-            var resultOfFunction = dt.Compute(functionParser.getFilledObjFuntion(varValues),"");
+             var resultOfFunction = new Expression(functionParser.getFilledObjFuntion(varValues)).Evaluate();
             return Convert.ToDouble(resultOfFunction);
         }
 
