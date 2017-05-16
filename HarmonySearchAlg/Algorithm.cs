@@ -54,6 +54,7 @@ namespace HarmonySearchAlg
             this.bw = 0.005;
 
             functionParser = new ObjFunctionParser(this.objectiveFunction);
+            functionParser.removePow();
 
             rnd = new Random();
         }

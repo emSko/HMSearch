@@ -73,9 +73,9 @@ namespace HarmonySearchAlg.Tests
         public void replacePowOperatorForOneVariable()
         {
             string function = "x1^2";
-            string excepted = "(x1*x1)";
+            string excepted = "Pow(x1,2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
-            string actual = sut.replacePowOperator();
+            string actual = sut.removePow();
             Assert.AreEqual(excepted, actual);
         }
 
@@ -83,9 +83,9 @@ namespace HarmonySearchAlg.Tests
         public void replacePowOperatorForFunction()
         {
             string function = "x1+4*10+x2^2";
-            string excepted = "x1+4*10+(x2*x2)";
+            string excepted = "x1+4*10+Pow(x2,2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
-            string actual = sut.replacePowOperator();
+            string actual = sut.removePow();
             Assert.AreEqual(excepted, actual);
         }
 
@@ -93,9 +93,30 @@ namespace HarmonySearchAlg.Tests
         public void replacePowOperatorForComplicatedFunction()
         {
             string function = "x1+4*10+x2^2+x3^4/9+x1^3/x2^2";
-            string excepted = "x1+4*10+(x2*x2)+(x3*x3*x3*x3)/9+(x1*x1*x1)/(x2*x2)";
+            string excepted = "x1+4*10+Pow(x2,2)+Pow(x3,4)/9+Pow(x1,3)/Pow(x2,2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
-            string actual = sut.replacePowOperator();
+            string actual = sut.removePow();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void replacePowOperatorForFunctionWithBrackets()
+        {
+            string function = "(x1+2)^2";
+            string excepted = "Pow((x1+2),2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.removePow();
+            Assert.AreEqual(excepted, actual);
+        }
+
+
+        [TestMethod()]
+        public void replacePowOperatorForFunctionWithBracketsWithNestedPow()
+        {
+            string function = "(x1^3+2)^2";
+            string excepted = "Pow((Pow(x1,3)+2),2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.removePow();
             Assert.AreEqual(excepted, actual);
         }
 

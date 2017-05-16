@@ -10,19 +10,26 @@ namespace HarmonySearchAlg
     {
         private string function;
         char[] separatingChars = { '+', '-', '*', '/', '^', ')', '(' };
+        char[] separatingCharsForDeVar = { '+', '-', '*', '/', '^', ')', '(' ,','};
 
         public ObjFunctionParser(string function)
         {
             this.function = function;
+        }
+
+        public string removePow()
+        {
             if (this.function.Contains('^'))
                 this.function = replacePowOperator();
+            return this.function;
         }
+
 
         //funckja zwraca listę zawierającą wszytskie zmienne decyzyjne
         public List<string> getDesignVariables()
         {
             List<string> variables = new List<string>();
-            string[] words = function.Split(separatingChars, 
+            string[] words = function.Split(separatingCharsForDeVar, 
                              System.StringSplitOptions.RemoveEmptyEntries);
             foreach (string w in words)
             {
@@ -33,31 +40,68 @@ namespace HarmonySearchAlg
         }
 
 
-        public string replacePowOperator()
+        private string replacePowOperator()
         {
             string result = "";
             string[] pieces = function.Split('^');
+
             for(int i = 0;i<(pieces.Length-1);++i)
             {
                 result = result + pieces[i];
+                if (result[result.Length - 1] == ')')
+                {
+                    int position = result.LastIndexOf('(');
+                    string f = result.Substring(position);
+                    if (position == 0)
+                        result = "";
+                    result = result + "Pow(" + f + ",";
+                }
+                else
+                {
 
-                string[] p1 = pieces[i].Split(separatingChars,
-                            System.StringSplitOptions.RemoveEmptyEntries);
+                    string[] p1 = pieces[i].Split(separatingChars,
+                              System.StringSplitOptions.RemoveEmptyEntries);
 
-                result = result.Substring(0, result.Length - p1[p1.Length-1].Length);
-                result = result + '(' + p1[p1.Length - 1];
-
+                    result = result.Substring(0, result.Length - p1[p1.Length - 1].Length);
+                    result = result + "Pow(" + p1[p1.Length - 1]+",";
+                }
                 string[] p2 = pieces[i + 1].Split(separatingChars,
                             System.StringSplitOptions.RemoveEmptyEntries);
-                string number = p1[p1.Length - 1];
-                for(int j=0; j<Convert.ToInt32(p2[0])-1; j++)
-                {
-                    result = result + "*" + number;
-                }
-                result = result + ')';
+                result = result + p2[0] + ")";
                 pieces[i + 1] = pieces[i + 1].Substring(p2[0].Length);
+
             }
             result = result + pieces[pieces.Length - 1];
+
+            /*
+            pieces = result.Split('(');
+            result = "";
+            for(int i = 0; i < (pieces.Length); ++i)
+            {
+                if (!pieces[i].Contains(")"))
+                    result = result + pieces[i];
+                else
+                {
+                    string[] p1= pieces[i].Split(')');
+                    if (p1[p1.Length-1].Substring(0,1)=="^")
+                    {
+                        string[] p2 = p1[p1.Length - 1].Split(separatingChars,
+                                System.StringSplitOptions.RemoveEmptyEntries);
+                        p1[0] = "(" + pieces[0] + ")";
+                        result = result + p1[0];
+                        for (int j=0; j<Convert.ToInt32(p2[0]);++j )
+                        {
+                            result = result + "*" + p1[0];
+                        }
+                    }
+                    else
+                    {
+                        result = result + "(" + pieces[i];
+                    }
+
+                }
+            }*/
+
             return result;
         }
 
@@ -69,9 +113,10 @@ namespace HarmonySearchAlg
             List<string> vars = getDesignVariables();
             foreach(string v in vars)
             {
-                filledFunction = filledFunction.Replace(v, varValues[v].ToString());
+                string number = varValues[v].ToString();
+                filledFunction = filledFunction.Replace(v, number.Replace(',','.'));
             }
-            filledFunction = filledFunction.Replace(',', '.');
+          //  filledFunction = filledFunction.Replace(',', '.');
             return filledFunction;
         }
     }
