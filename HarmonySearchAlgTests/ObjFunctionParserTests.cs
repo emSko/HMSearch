@@ -84,6 +84,16 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+        [TestMethod()]
+        public void removeEandPi()
+        {
+            string function = "x1^2+3*e-pi";
+            string excepted = "x1^2+3*2.718281828459-3.14159265359";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.removeEandPi();
+            Assert.AreEqual(excepted, actual);
+        }
+
 
         [TestMethod()]
         public void replacePowOperatorForFunction()
