@@ -156,5 +156,37 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+
+        [TestMethod()]
+        public void replaceTrigFuntions()
+        {
+            string function = "cos(2*x1)-arcsin(3*pi)";
+            string excepted = "Cos(2*x1)-Asin(3*pi)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.replaceTrigFunctions();
+            Assert.AreEqual(excepted, actual);
+        }
+
+
+        [TestMethod()]
+        public void parseEasyFunction()
+        {
+            string function = "cos(2*x1)-arcsin(3*pi)-x2^2";
+            string excepted = "Cos(2*x1)-Asin(3*pi)-Pow(x2,2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void parseTrigFunctionNested()
+        {
+            string function = "(cos(2*x1)-arcsin(3*pi)-x2^2)^2";
+            string excepted = "Pow(Cos(2*x1)-Asin(3*pi)-Pow(x2,2),2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
     }
 }
