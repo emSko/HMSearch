@@ -24,6 +24,19 @@ namespace HarmonySearchAlg
             return this.function;
         }
 
+        //public string removeE()
+        //{
+        //    if (this.function.Contains('e'))
+        //        this.function = replaceESign();
+        //    return this.function;
+        //}
+
+        //public string replaceESign()
+        //{
+        //    string result = this.function;
+        //    result.Replace("e", "2,71");
+        //    return result;
+        //}
 
         //funckja zwraca listę zawierającą wszytskie zmienne decyzyjne
         public List<string> getDesignVariables()
@@ -37,6 +50,60 @@ namespace HarmonySearchAlg
                     variables.Add(w);
             }
             return variables;
+        }
+
+        //metoda zwraca listę zawierającą wyrażenia logarytmiczne
+        public List<string> getLogarithms()
+        {
+            char[] separators = { '+', '-', '*', '/', '^', ',' };
+            List<string> logarithm = new List<string>();
+            string[] words = function.Split(separators,
+                             System.StringSplitOptions.RemoveEmptyEntries);
+            foreach (string w in words)
+            {
+                if (w.StartsWith("l") && !logarithm.Contains(w))
+                    logarithm.Add(w);
+            }
+            return logarithm;
+        }
+
+        // metoda podstawia wartości logarytmów
+        // przed wywołaniem watrości muszą być podstawione za x oraz za e (oraz za pi? )
+        public string replaceLogarithmsWithValues()
+        {
+            string filledFunction = this.function;
+            List<string> logarithms = getLogarithms();
+
+            int begin;
+            int end;
+            string number;
+            double value;
+
+            foreach (string log in logarithms)
+            {
+
+                if (log.Contains("log"))
+                {
+                    begin = 4;
+                    end = log.LastIndexOf(")");
+                    number = log.Substring(begin, end - begin);
+                    value = Math.Log10(Double.Parse(number));
+                    filledFunction = filledFunction.Replace(log, value.ToString());
+                }
+
+                else
+                    if(log.Contains("ln"))
+                {
+                    begin = 3;
+                    end = log.LastIndexOf(")");
+                    number = log.Substring(begin, end - begin);
+                    value = Math.Log(Double.Parse(number));
+                    var tmp = value.ToString();
+                    filledFunction = filledFunction.Replace(log, value.ToString());
+                }
+
+            }
+            return filledFunction;
         }
 
 

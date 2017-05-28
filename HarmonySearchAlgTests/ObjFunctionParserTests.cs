@@ -80,6 +80,16 @@ namespace HarmonySearchAlg.Tests
         }
 
         [TestMethod()]
+        public void getListOfLogarithms()
+        {
+            string function = "x1^2+log(1)*3+ln(2)";
+            string excepted = "x1^2+0*3+0,693147180559945";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.replaceLogarithmsWithValues();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
         public void replacePowOperatorForFunction()
         {
             string function = "x1+4*10+x2^2";
