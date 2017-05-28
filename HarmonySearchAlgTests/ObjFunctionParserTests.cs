@@ -136,5 +136,25 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+        [TestMethod()]
+        public void replacePowOperatorForFunctionWithNestedPowVer2()
+        {
+            string function = "(4+x1^3)^2";
+            string excepted = "Pow((4+Pow(x1,3)),2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.removePow();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void replacePowOperatorForFunctionWithManyNestedPowVer2()
+        {
+            string function = "(4+x1^3+x2^4)^2-x2^2";
+            string excepted = "Pow((4+Pow(x1,3)+Pow(x2,4)),2)-Pow(x2,2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.removePow();
+            Assert.AreEqual(excepted, actual);
+        }
+
     }
 }

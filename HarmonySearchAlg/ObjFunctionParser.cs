@@ -129,10 +129,26 @@ namespace HarmonySearchAlg
                 result = result + pieces[i];
                 if (result[result.Length - 1] == ')')
                 {
-                    int position = result.LastIndexOf('(');
-                    string f = result.Substring(position);
-                    if (position == 0)
-                        result = "";
+                    string f=""; int position;
+                    string temp = result;
+                    string x;
+                    do
+                    {
+                        position = temp.LastIndexOf('(');
+                        if (position == 0)
+                        {
+                            f = result;
+                            result = "";
+                            break;
+                        }
+                        if (position < 3)
+                            break;
+                        temp = temp.Substring(0, position);
+                        int o= temp.Length;
+                        x = temp.Substring(o-3);
+                    } while (x == "Pow");
+                    if(position!=0)
+                        f = result.Substring(position);
                     result = result + "Pow(" + f + ",";
                 }
                 else
