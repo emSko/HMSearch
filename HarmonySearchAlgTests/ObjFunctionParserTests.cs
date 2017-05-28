@@ -172,7 +172,7 @@ namespace HarmonySearchAlg.Tests
         public void parseEasyFunction()
         {
             string function = "cos(2*x1)-arcsin(3*pi)-x2^2";
-            string excepted = "Cos(2*x1)-Asin(3*pi)-Pow(x2,2)";
+            string excepted = "Cos(2*x1)-Asin(3*3.14159265359)-Pow(x2,2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             string actual = sut.parseFunction();
             Assert.AreEqual(excepted, actual);
@@ -182,11 +182,30 @@ namespace HarmonySearchAlg.Tests
         public void parseTrigFunctionNested()
         {
             string function = "(cos(2*x1)-arcsin(3*pi)-x2^2)^2";
-            string excepted = "Pow(Cos(2*x1)-Asin(3*pi)-Pow(x2,2),2)";
+            string excepted = "Pow((Cos(2*x1)-Asin(3*3.14159265359)-Pow(x2,2)),2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+        [TestMethod()]
+        public void parseTrigFunctionPower()
+        {
+            string function = "(cos(2*x1))^2";
+            string excepted = "Pow((Cos(2*x1)),2)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             string actual = sut.parseFunction();
             Assert.AreEqual(excepted, actual);
         }
 
+        [TestMethod()]
+        public void RosenbrockFunctionParse()
+        {
+            string function = "100*(x2-x1^2)^2+(1-x1)^2";
+
+            string excepted = "100*Pow((x2-Pow(x1,2)),2)+Pow((1-x1),2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
     }
 }

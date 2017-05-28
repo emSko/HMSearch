@@ -37,9 +37,6 @@ namespace HarmonySearchAlg
         Dictionary<string, double> minValues;
         Dictionary<string, double> maxValues;
 
-        public Algorithm()
-        { }
-
         public Algorithm(string objectiveFunction, int numberOfDesignVar, Dictionary<string, double> minValues, 
             Dictionary<string, double> maxValues, int numberOfRunds=50000, int HMMatrixSize=20,
                             double HMCR=0.9,double PAR=0.35)
@@ -56,12 +53,18 @@ namespace HarmonySearchAlg
             this.bw = 0.005;
 
             functionParser = new ObjFunctionParser(this.objectiveFunction);
-            functionParser.removePow();
+            functionParser.parseFunction();
 
             rnd = new Random();
         }
 
-
+        public Dictionary<string, double> runAlgorithm()
+        {
+            InitializeHSM();
+            for (int i = 0; i < numberOfRunds; ++i)
+                improviseNewSolution();
+            return hsMemory[0];
+        }
 
         public void improviseNewSolution()
         {
@@ -93,7 +96,7 @@ namespace HarmonySearchAlg
                 //wartosc ze znajdujacych sie juz w macierzy
                 if (probOfHistoric <= HMCR)
                 {
-                    int index = rnd.Next(0, numberOfDesignVar);
+                    int index = rnd.Next(0, HMMatrixSize);
                     value = hsMemory[index][v];
                     double probPitchAdjust = rnd.NextDouble();
 

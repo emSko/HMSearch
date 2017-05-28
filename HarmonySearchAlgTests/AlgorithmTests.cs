@@ -106,5 +106,33 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+        [TestMethod()]
+        public void computeRodenbrockFunction()
+        {
+            string objFunction = "100*(x2-x1^2)^2+(1-x1)^2";
+            double x1 = 0.5, x2 = 2.1;
+            int numberOfVar = 2;
+
+            Dictionary<string, double> dic = new Dictionary<string, double>();
+            dic.Add("x1", x1);
+            dic.Add("x2", x2);
+
+            Dictionary<string, double> minValues = new Dictionary<string, double>();
+            minValues.Add("x1", -10);
+            minValues.Add("x2", -10);
+
+
+            Dictionary<string, double> maxValues = new Dictionary<string, double>();
+            maxValues.Add("x1", 10);
+            maxValues.Add("x2", 10);
+
+            double excepted = 0;
+
+            Algorithm sut = new Algorithm(objFunction, numberOfVar,
+                minValues, maxValues);
+            Dictionary<string, double> actual = sut.runAlgorithm();
+            Assert.AreNotEqual(excepted, actual["functionVal"]);
+        }
+
     }
 }

@@ -20,8 +20,9 @@ namespace HarmonySearchAlg
         public string parseFunction()
         {
             this.function = replaceTrigFunctions();
-            this.function = removePow();
             this.function = replaceLogarithmsWithValues();
+            this.function = removePow();
+            this.function = removeEandPi();
             return this.function;
         }
 
@@ -152,11 +153,17 @@ namespace HarmonySearchAlg
                         if (position < 3)
                             break;
                         temp = temp.Substring(0, position);
-                        int o= temp.Length;
-                        x = temp.Substring(o-3);
-                    } while (x == "Pow");
-                    if(position!=0)
+                        int[] signIndex = { temp.LastIndexOf("+"),
+                        temp.LastIndexOf("-"),temp.LastIndexOf("/"),temp.LastIndexOf("*"),temp.LastIndexOf("(")};
+                        int op = signIndex.Max();
+                        x = temp.Substring(op+1);
+                    } while (x == "Pow"|| x=="Log"|| x=="Sin"|| x == "Cos"|| x == "Asin"||
+                    x == "Acos"|| x == "Tan"|| x == "Atan");
+                    if (position != 0)
+                    {
                         f = result.Substring(position);
+                        result = temp;
+                    }
                     result = result + "Pow(" + f + ",";
                 }
                 else
