@@ -37,6 +37,8 @@ namespace HarmonySearchAlg
         Dictionary<string, double> minValues;
         Dictionary<string, double> maxValues;
 
+        public Algorithm()
+        { }
 
         public Algorithm(string objectiveFunction, int numberOfDesignVar, Dictionary<string, double> minValues, 
             Dictionary<string, double> maxValues, int numberOfRunds=50000, int HMMatrixSize=20,
@@ -73,6 +75,13 @@ namespace HarmonySearchAlg
             }
         }
 
+        //public void logarithmTest()
+        //{
+        //    string formula = "x1+Log10(x1)*3+Log(2.718281828459,2.718281828459)";
+        //    var result = new Expression(formula);
+        //    result.Parameters["x1"] = 10;
+        //    var tmp = Convert.ToDouble(result.Evaluate());
+        //}
 
         public Dictionary<string, double> newValueSelection()
         {

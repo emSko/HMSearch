@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HarmonySearchAlg;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HarmonySearchAlg.Tests
 {
@@ -82,12 +77,13 @@ namespace HarmonySearchAlg.Tests
         [TestMethod()]
         public void getListOfLogarithms()
         {
-            string function = "x1^2+log(1)*3+ln(2)";
-            string excepted = "x1^2+0*3+0,693147180559945";
+            string function = "x1^2+log(x1)*3+ln(25)";
+            string excepted = "x1^2+Log10(x1)*3+Log(2.718281828459,25)";
             ObjFunctionParser sut = new ObjFunctionParser(function);
             string actual = sut.replaceLogarithmsWithValues();
             Assert.AreEqual(excepted, actual);
         }
+
 
         [TestMethod()]
         public void replacePowOperatorForFunction()
