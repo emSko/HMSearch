@@ -67,8 +67,7 @@ namespace HarmonySearchAlg
             return logarithm;
         }
 
-        // metoda podstawia wartości logarytmów
-        // przed wywołaniem watrości muszą być podstawione za x oraz za e (oraz za pi? )
+        // metoda podstawia math.logarithm
         public string replaceLogarithmsWithValues()
         {
             string filledFunction = this.function;
@@ -77,7 +76,6 @@ namespace HarmonySearchAlg
             int begin;
             int end;
             string number;
-            double value;
 
             foreach (string log in logarithms)
             {
@@ -87,8 +85,8 @@ namespace HarmonySearchAlg
                     begin = 4;
                     end = log.LastIndexOf(")");
                     number = log.Substring(begin, end - begin);
-                    value = Math.Log10(Double.Parse(number));
-                    filledFunction = filledFunction.Replace(log, value.ToString());
+                    var numberString = number.ToString().Replace(",", ".");
+                    filledFunction = filledFunction.Replace(log, "Log10(" + numberString + ")");
                 }
 
                 else
@@ -97,9 +95,8 @@ namespace HarmonySearchAlg
                     begin = 3;
                     end = log.LastIndexOf(")");
                     number = log.Substring(begin, end - begin);
-                    value = Math.Log(Double.Parse(number));
-                    var tmp = value.ToString();
-                    filledFunction = filledFunction.Replace(log, value.ToString());
+                    var numberString = number.ToString().Replace(",", ".");
+                    filledFunction = filledFunction.Replace(log, "Log(2.718281828459," + numberString + ")");
                 }
 
             }

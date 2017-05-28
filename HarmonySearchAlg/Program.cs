@@ -14,9 +14,12 @@ namespace HarmonySearchAlg
         [STAThread]
         static void Main()
         {
+            //Algorithm alg = new Algorithm();
+            //alg.logarithmTest();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
         }
     }
 }
