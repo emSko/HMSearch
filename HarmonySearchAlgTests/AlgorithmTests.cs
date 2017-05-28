@@ -98,7 +98,7 @@ namespace HarmonySearchAlg.Tests
             dic.Add("x1", x1);
             dic.Add("x2", x2);
 
-            double excepted = Math.Pow((4 + Math.Pow(x1, 3) + Math.Pow(x2, 4)), 2) - Math.Pow(x2, 2);
+            double excepted = Math.Pow((4 + Math.Pow(x1, 3)), 2);
 
             Algorithm sut = new Algorithm(objFunction, numberOfVar,
                 new Dictionary<string, double>(), new Dictionary<string, double>());
