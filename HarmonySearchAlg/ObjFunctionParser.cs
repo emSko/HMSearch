@@ -17,13 +17,21 @@ namespace HarmonySearchAlg
             this.function = function;
         }
 
+        public string parseFunction()
+        {
+            this.function = replaceTrigFunctions();
+            this.function = removePow();
+            this.function = replaceLogarithmsWithValues();
+            return this.function;
+        }
+
         public string removePow()
         {
             if (this.function.Contains('^'))
                 this.function = replacePowOperator();
             return this.function;
         }
-
+        
         //public string removeE()
         //{
         //    if (this.function.Contains('e'))
@@ -182,6 +190,32 @@ namespace HarmonySearchAlg
                 }
             }*/
 
+            return result;
+        }
+
+        public string replaceTrigFunctions()
+        {
+            string result=this.function;
+            List<string> trig = new List<string>(new string[] { "cos", "sin", "arccos",
+            "arcsin", "tan", "arctan", "arcCos", "arcSin"}); ;
+
+
+            Dictionary<string, string> trigFunc =
+            new Dictionary<string, string>();
+
+            trigFunc.Add(trig[0],"Cos");
+            trigFunc.Add(trig[1],"Sin");
+            trigFunc.Add(trig[2],"Acos");
+            trigFunc.Add(trig[3], "Asin");
+            trigFunc.Add(trig[4], "Tan");
+            trigFunc.Add(trig[5], "Atan");
+            trigFunc.Add(trig[6], "Acos");
+            trigFunc.Add(trig[7], "Asin");
+
+            foreach (string v in trig)
+            {
+                result = result.Replace(v,trigFunc[v]);
+            }
             return result;
         }
 
