@@ -157,5 +157,10 @@ namespace HarmonySearchAlg
             return Convert.ToDouble(resultOfFunction);
         }
 
+        public void drawSurfacePlot()
+        {
+
+        }
+
     }
 }
