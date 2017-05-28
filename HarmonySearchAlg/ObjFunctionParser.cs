@@ -24,19 +24,34 @@ namespace HarmonySearchAlg
             return this.function;
         }
 
-        //public string removeE()
-        //{
-        //    if (this.function.Contains('e'))
-        //        this.function = replaceESign();
-        //    return this.function;
-        //}
+        public string removeEandPi()
+        {
+            if (this.function.Contains('e'))
+            {
+                this.function = replaceESign();
+            }
 
-        //public string replaceESign()
-        //{
-        //    string result = this.function;
-        //    result.Replace("e", "2,71");
-        //    return result;
-        //}
+            if (this.function.Contains("pi"))
+            {
+                this.function = replacePiSign();
+            }
+
+            return this.function;
+        }
+
+        public string replaceESign()
+        {
+            string result = this.function;
+            result = result.Replace("e", "2.718281828459");
+            return result;
+        }
+
+        public string replacePiSign()
+        {
+            string result = this.function;
+            result = result.Replace("pi", "3.14159265359");
+            return result;
+        }
 
         //funckja zwraca listę zawierającą wszytskie zmienne decyzyjne
         public List<string> getDesignVariables()
