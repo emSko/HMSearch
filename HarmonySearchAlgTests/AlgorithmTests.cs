@@ -87,5 +87,24 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+        [TestMethod()]
+        public void computeObjectiveFunctionCorrectWithNestedPowTest()
+        {
+            string objFunction = "(4+x1^3)^2";
+            double x1 = 0.5, x2 = 2.1;
+            int numberOfVar = 2;
+
+            Dictionary<string, double> dic = new Dictionary<string, double>();
+            dic.Add("x1", x1);
+            dic.Add("x2", x2);
+
+            double excepted = Math.Pow((4 + Math.Pow(x1, 3) + Math.Pow(x2, 4)), 2) - Math.Pow(x2, 2);
+
+            Algorithm sut = new Algorithm(objFunction, numberOfVar,
+                new Dictionary<string, double>(), new Dictionary<string, double>());
+            double actual = sut.computeObjectiveFunction(dic);
+            Assert.AreEqual(excepted, actual);
+        }
+
     }
 }
