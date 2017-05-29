@@ -29,20 +29,28 @@ namespace HarmonySearchAlg
             HideControls();
             ObjFunctionParser obj = new ObjFunctionParser(textBoxFunction.Text);
             variables = obj.getDesignVariables();
-            variables.Sort();
-            amountOfVariables = variables.Count();
 
-            for (int i=1; i<=variables.Count; i++)
+            if (variables.Count < 1)
             {
-                ((Label)Form1.ActiveForm.Controls.Find("label" + i, true)[0]).Text = variables[i - 1];
-                ((Label)Form1.ActiveForm.Controls.Find("label" + i, true)[0]).Show();
-                ((TextBox)Form1.ActiveForm.Controls.Find("textBox" + i, true)[0]).Show();
-                ((TextBox)Form1.ActiveForm.Controls.Find("textBox" + i + i, true)[0]).Show();
+                MessageBox.Show("Niepoprawna formuła!");
             }
+            else
+            {
+                variables.Sort();
+                amountOfVariables = variables.Count();
 
-            buttonMinMax.Show();
-            labelMax.Show();
-            labelMin.Show();
+                for (int i = 1; i <= variables.Count; i++)
+                {
+                    ((Label)Form1.ActiveForm.Controls.Find("label" + i, true)[0]).Text = variables[i - 1];
+                    ((Label)Form1.ActiveForm.Controls.Find("label" + i, true)[0]).Show();
+                    ((TextBox)Form1.ActiveForm.Controls.Find("textBox" + i, true)[0]).Show();
+                    ((TextBox)Form1.ActiveForm.Controls.Find("textBox" + i + i, true)[0]).Show();
+                }
+
+                buttonMinMax.Show();
+                labelMax.Show();
+                labelMin.Show();
+            }
         }
 
         private void HideControls()

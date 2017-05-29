@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HarmonySearchAlg
 {
@@ -152,8 +153,8 @@ namespace HarmonySearchAlg
 
         public double computeObjectiveFunction(Dictionary<string, double> varValues)
         {
-             var resultOfFunction = new Expression(functionParser.getFilledObjFuntion(varValues)).Evaluate();
-            return Convert.ToDouble(resultOfFunction);
+                var resultOfFunction = new Expression(functionParser.getFilledObjFuntion(varValues)).Evaluate();
+                return Convert.ToDouble(resultOfFunction);
         }
 
     }
