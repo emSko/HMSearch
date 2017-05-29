@@ -140,33 +140,56 @@ namespace HarmonySearchAlg
                 result = result + pieces[i];
                 if (result[result.Length - 1] == ')')
                 {
-                    string f=""; int position;
-                    string temp = result;
-                    string x;
-                    do
+                    string f;
+                    int j = 0;
+                    int lInd = result.Length-1;
+                    int p = 1;
+                    int c = p - j;
+                    while (c!=0)
                     {
-                        position = temp.LastIndexOf('(');
-                        if (position == 0)
-                        {
-                            f = result;
-                            result = "";
-                            break;
-                        }
-                        if (position < 3)
-                            break;
-                        temp = temp.Substring(0, position);
-                        int[] signIndex = { temp.LastIndexOf("+"),
-                        temp.LastIndexOf("-"),temp.LastIndexOf("/"),temp.LastIndexOf("*"),temp.LastIndexOf("(")};
-                        int op = signIndex.Max();
-                        x = temp.Substring(op+1);
-                    } while (x == "Pow"|| x=="Log"|| x=="Sin"|| x == "Cos"|| x == "Asin"||
-                    x == "Acos"|| x == "Tan"|| x == "Atan" || x == "Exp");
-                    if (position != 0)
+                        lInd = result.Substring(0,lInd).LastIndexOf('(');
+                        p = result.Substring(lInd).Count(z => z == ')');
+                        j++;
+                        c = p - j;
+                    }
+                    if (lInd != 0)
                     {
-                        f = result.Substring(position);
-                        result = temp;
+                        f = result.Substring(lInd);
+                        result = result.Substring(0,lInd);
+                    }
+                    else
+                    {
+                        f = result;
+                        result = "";
                     }
                     result = result + "Pow(" + f + ",";
+                    //string f=""; int position;
+                    //string temp = result;
+                    //string x;
+                    //do
+                    //{
+                    //    position = temp.LastIndexOf('(');
+                    //    if (position == 0)
+                    //    {
+                    //        f = result;
+                    //        result = "";
+                    //        break;
+                    //    }
+                    //    if (position < 3)
+                    //        break;
+                    //    temp = temp.Substring(0, position);
+                    //    int[] signIndex = { temp.LastIndexOf("+"),
+                    //    temp.LastIndexOf("-"),temp.LastIndexOf("/"),temp.LastIndexOf("*"),temp.LastIndexOf("(")};
+                    //    int op = signIndex.Max();
+                    //    x = temp.Substring(op+1);
+                    //} while (x == "Pow"|| x=="Log"|| x=="Sin"|| x == "Cos"|| x == "Asin"||
+                    //x == "Acos"|| x == "Tan"|| x == "Atan" || x == "Exp");
+                    //if (position != 0)
+                    //{
+                    //    f = result.Substring(position);
+                    //    result = temp;
+                    //}
+                    //result = result + "Pow(" + f + ",";
                 }
                 else
                 {
