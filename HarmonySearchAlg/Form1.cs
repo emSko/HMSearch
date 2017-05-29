@@ -100,6 +100,33 @@ namespace HarmonySearchAlg
             textBoxHMMatrixSize.Enabled = false;
             textBoxBW.Enabled = false;
             textBoxNumberOfRounds.Enabled = false;
+
+            textBoxx1.Hide();
+            textBoxx2.Hide();
+            textBoxx3.Hide();
+            textBoxx4.Hide();
+            textBoxx5.Hide();
+            textBoxx6.Hide();
+            textBoxx7.Hide();
+            textBoxx8.Hide();
+            textBoxx9.Hide();
+            textBoxx10.Hide();
+            textBoxFunctionValue.Hide();
+
+            labelx1.Hide();
+            labelx2.Hide();
+            labelx3.Hide();
+            labelx4.Hide();
+            labelx5.Hide();
+            labelx6.Hide();
+            labelx7.Hide();
+            labelx8.Hide();
+            labelx9.Hide();
+            labelx10.Hide();
+            labelValueObj.Hide();
+            labelValues.Hide();
+
+            buttonRunAlgorithm.Hide();
         }
 
         private void buttonMinMax_Click(object sender, EventArgs e)
@@ -125,6 +152,7 @@ namespace HarmonySearchAlg
             {
                 button1.Show();
             }
+            buttonRunAlgorithm.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -162,6 +190,23 @@ namespace HarmonySearchAlg
             textBoxHMMatrixSize.Enabled = true;
             textBoxBW.Enabled = true;
             textBoxNumberOfRounds.Enabled = true;
+        }
+
+        private void buttonRunAlgorithm_Click(object sender, EventArgs e)
+        {
+            var result = algorithm.runAlgorithm();
+            for (int i = 1; i <= amountOfVariables; i++)
+            {
+                //((TextBox)Form1.ActiveForm.Controls.Find("textBoxx" + i, true)[0]).Text = variables[i - 1];
+                ((TextBox)Form1.ActiveForm.Controls.Find("textBoxx" + i, true)[0]).Text = result[variables[i - 1]].ToString();
+                ((TextBox)Form1.ActiveForm.Controls.Find("textBoxx" + i, true)[0]).Show();
+                ((Label)Form1.ActiveForm.Controls.Find("labelx" + i, true)[0]).Text = variables[i - 1];
+                ((Label)Form1.ActiveForm.Controls.Find("labelx" + i, true)[0]).Show();
+            }
+            labelValues.Show();
+            labelValueObj.Show();
+            textBoxFunctionValue.Text = result["functionVal"].ToString();
+            textBoxFunctionValue.Show();
         }
     }
 }
