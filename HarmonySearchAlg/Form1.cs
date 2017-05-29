@@ -9,11 +9,13 @@ namespace HarmonySearchAlg
     {
         int amountOfVariables;
         List<string> variables;
+        Algorithm algorithm;
 
         public Form1()
         {
             InitializeComponent();
             HideControls();
+
         }
 
         private void buttonEnterFunction_Click(object sender, EventArgs e)
@@ -90,8 +92,13 @@ namespace HarmonySearchAlg
                 maxValues.Add(variables[i - 1], Convert.ToDouble(maxValue));
             }
 
-            Algorithm algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
+            algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
             algorithm.InitializeHSM();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            algorithm.drawSurfacePlot();
         }
     }
 }

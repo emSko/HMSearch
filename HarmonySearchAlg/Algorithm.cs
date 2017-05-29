@@ -58,6 +58,13 @@ namespace HarmonySearchAlg
             rnd = new Random();
         }
 
+        public void drawSurfacePlot()
+        {
+            Plotting_Form1 plot = new Plotting_Form1(ref functionParser);
+            plot.drawSurfacePlot(minValues, maxValues, vars);
+            plot.Show();
+        }
+
         public Dictionary<string, double> runAlgorithm()
         {
             InitializeHSM();
@@ -155,11 +162,6 @@ namespace HarmonySearchAlg
         {
              var resultOfFunction = new Expression(functionParser.getFilledObjFuntion(varValues)).Evaluate();
             return Convert.ToDouble(resultOfFunction);
-        }
-
-        public void drawSurfacePlot()
-        {
-
         }
 
     }

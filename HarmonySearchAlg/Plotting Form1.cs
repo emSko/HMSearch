@@ -14,9 +14,58 @@ namespace HarmonySearchAlg
     public partial class Plotting_Form1 : Form
     {
 
-        public Plotting_Form1()
+        ObjFunctionParser functionParser;
+        List<double> xValues;
+        List<double> yValues;
+        List<double> zValues;
+
+        public Plotting_Form1(ref ObjFunctionParser functionParser)
         {
+            this.functionParser = functionParser;
             InitializeComponent();
+        }
+
+        public double computeObjectiveFunction(Dictionary<string, double> varValues)
+        {
+            var resultOfFunction = new Expression(functionParser.getFilledObjFuntion(varValues)).Evaluate();
+            return Convert.ToDouble(resultOfFunction);
+        }
+
+        public void drawSurfacePlot(Dictionary<string, double> minValues, Dictionary<string, double> maxValues, List<string> vars)
+        {
+            var maxX = maxValues[vars[0]];
+            var minX = minValues[vars[0]];
+
+            var maxY = maxValues[vars[1]];
+            var minY = minValues[vars[1]];
+
+            var xRange = (maxX - minX) / 100;
+            var yRange = (maxY - minY) / 100;
+
+            Dictionary<string, double> values = new Dictionary<string, double>();
+            xValues = new List<double>();
+            yValues = new List<double>();
+            zValues = new List<double>();
+
+            var actualX = maxX;
+            var actualY = maxY;
+
+            xValues.Add(actualX);
+            yValues.Add(actualY);
+            values.Add(vars[0], actualX);
+            values.Add(vars[1], actualY);
+            zValues.Add(computeObjectiveFunction(values));
+
+            for (int i = 1; i < 100; i++)
+            {
+                actualX -= xRange;
+                actualY -= xRange;
+                xValues.Add(actualX);
+                yValues.Add(actualY);
+                values[vars[0]] = actualX;
+                values[vars[1]] = actualY;
+                zValues.Add(computeObjectiveFunction(values));
+            }
         }
 
         // Initial plot setup, modify this as needed
