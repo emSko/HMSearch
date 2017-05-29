@@ -207,5 +207,62 @@ namespace HarmonySearchAlg.Tests
             string actual = sut.parseFunction();
             Assert.AreEqual(excepted, actual);
         }
+
+        [TestMethod()]
+        public void LeviFunctionParse()
+        {
+            string function = "(sin(3*pi*x1))^2+(x1-1)^2*(1+(sin(3*pi*x2))^2)+(x2-1)^2*(1+(sin(2*pi*x2))^2)";
+
+            string excepted = "Pow((Sin(3*3.14159265359*x1)),2)+Pow((x1-1),2)*(1+Pow((Sin(3*3.14159265359*x2)),2))+Pow((x2-1),2)*(1+Pow((Sin(2*3.14159265359*x2)),2))";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void EwasFunctionParse()
+        {
+            string function = "x1*exp(-x1^2-x2^2)";
+
+            string excepted = "x1*Exp(-Pow(x1,2)-Pow(x2,2))";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void AbsFunctionParse()
+        {
+            string function = "|x1-x2|";
+
+            string excepted = "Abs(x1-x2)";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
+        [TestMethod()]
+        public void AbsFunctionWithOtherElementsParse()
+        {
+            string function = "x1^2-|x1-x2|+2*x2";
+
+            string excepted = "Pow(x1,2)-Abs(x1-x2)+2*x2";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
+
+        [TestMethod()]
+        public void AbsFunctionWithPowNestedParse()
+        {
+            string function = "x1^2-|x1^2-x2|+2*x2";
+
+            string excepted = "Pow(x1,2)-Abs(Pow(x1,2)-x2)+2*x2";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
     }
 }
