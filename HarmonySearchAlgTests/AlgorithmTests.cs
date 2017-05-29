@@ -209,5 +209,28 @@ namespace HarmonySearchAlg.Tests
             Assert.AreNotEqual(excepted, actual["functionVal"]);
         }
 
+        [TestMethod()]
+        public void computeAckleyFunction()
+        {
+            string objFunction = "-20*exp(-0.2*(0.5*(x1^2+x2^2))^0.5)-exp(0.5*(cos(2*pi*x1)+cos(2*pi*x2)))+e+20";
+            int numberOfVar = 2;
+
+            Dictionary<string, double> minValues = new Dictionary<string, double>();
+            minValues.Add("x1", -5);
+            minValues.Add("x2", -5);
+
+
+            Dictionary<string, double> maxValues = new Dictionary<string, double>();
+            maxValues.Add("x1", 5);
+            maxValues.Add("x2", 5);
+
+            double excepted = 0;
+
+            Algorithm sut = new Algorithm(objFunction, numberOfVar,
+                minValues, maxValues, 50000);
+            Dictionary<string, double> actual = sut.runAlgorithm();
+            Assert.AreNotEqual(excepted, actual["functionVal"]);
+        }
+
     }
 }

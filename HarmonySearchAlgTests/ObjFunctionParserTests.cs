@@ -264,5 +264,16 @@ namespace HarmonySearchAlg.Tests
             Assert.AreEqual(excepted, actual);
         }
 
+        [TestMethod()]
+        public void AckleyFucntionParse()
+        {
+            string function = "-20*exp(-0.2*(0.5*(x1^2+x2^2))^0.5)-exp(0.5*(cos(2*pi*x1)+cos(2*pi*x2)))+e+20";
+
+            string excepted = "-20*Exp(-0.2*Pow((0.5*(Pow(x1,2)+Pow(x2,2))),0.5))-Exp(0.5*(Cos(2*3.14159265359*x1)+Cos(2*3.14159265359*x2)))+2.718281828459+20";
+            ObjFunctionParser sut = new ObjFunctionParser(function);
+            string actual = sut.parseFunction();
+            Assert.AreEqual(excepted, actual);
+        }
+
     }
 }
