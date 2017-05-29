@@ -78,6 +78,7 @@ namespace HarmonySearchAlg
 
             labelMax.Hide();
             labelMin.Hide();
+            button1.Hide();
         }
 
         private void buttonMinMax_Click(object sender, EventArgs e)
@@ -95,6 +96,10 @@ namespace HarmonySearchAlg
 
             algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
             algorithm.InitializeHSM();
+            if(variables.Count()==2)
+            {
+                button1.Show();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

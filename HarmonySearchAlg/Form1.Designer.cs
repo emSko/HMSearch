@@ -349,11 +349,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(493, 279);
+            this.button1.Location = new System.Drawing.Point(338, 279);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 70);
+            this.button1.Size = new System.Drawing.Size(250, 60);
             this.button1.TabIndex = 43;
-            this.button1.Text = "button1";
+            this.button1.Text = "Rysuj warstwice";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -361,7 +361,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 590);
+            this.ClientSize = new System.Drawing.Size(1079, 569);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.labelMin);
             this.Controls.Add(this.labelMax);
