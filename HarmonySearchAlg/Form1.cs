@@ -7,6 +7,12 @@ namespace HarmonySearchAlg
 {
     public partial class Form1 : Form
     {
+        int numberOfRounds;
+        int HMMatrixSize;
+        double HMCR;
+        double PAR;
+        double bw;
+
         int amountOfVariables;
         List<string> variables;
         Algorithm algorithm;
@@ -79,12 +85,24 @@ namespace HarmonySearchAlg
             labelMax.Hide();
             labelMin.Hide();
             button1.Hide();
+
+            textBoxPAR.Enabled = false;
+            textBoxHMCR.Enabled = false;
+            textBoxHMCR.Enabled = false;
+            textBoxHMMatrixSize.Enabled = false;
+            textBoxBW.Enabled = false;
+            textBoxNumberOfRounds.Enabled = false;
         }
 
         private void buttonMinMax_Click(object sender, EventArgs e)
         {
             Dictionary<string, double> minValues = new Dictionary<string, double>();
             Dictionary<string, double> maxValues = new Dictionary<string, double>();
+            numberOfRounds = Int32.Parse(textBoxNumberOfRounds.Text);
+            HMMatrixSize = Int32.Parse(textBoxHMMatrixSize.Text);
+            HMCR = double.Parse(textBoxHMCR.Text);
+            PAR = double.Parse(textBoxPAR.Text);
+            bw = double.Parse(textBoxBW.Text);
 
             for (int i=1; i<=amountOfVariables; i++)
             {
@@ -94,7 +112,7 @@ namespace HarmonySearchAlg
                 maxValues.Add(variables[i - 1], Convert.ToDouble(maxValue));
             }
 
-            algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues);
+            algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues, this.numberOfRounds, this.HMMatrixSize, this.HMCR, this.PAR, this.bw);
             algorithm.InitializeHSM();
             if(variables.Count()==2)
             {
@@ -105,6 +123,38 @@ namespace HarmonySearchAlg
         private void button1_Click(object sender, EventArgs e)
         {
             algorithm.drawSurfacePlot();
+        }
+
+        private void checkBoxEnable_Click(object sender, EventArgs e)
+        {
+            if (checkBoxEnable.Checked)
+            {
+                textBoxPAR.Enabled = true;
+                textBoxHMCR.Enabled = true;
+                textBoxHMCR.Enabled = true;
+                textBoxHMMatrixSize.Enabled = true;
+                textBoxBW.Enabled = true;
+                textBoxNumberOfRounds.Enabled = true;
+            }
+            else
+            {
+                textBoxPAR.Enabled = false;
+                textBoxHMCR.Enabled = false;
+                textBoxHMCR.Enabled = false;
+                textBoxHMMatrixSize.Enabled = false;
+                textBoxBW.Enabled = false;
+                textBoxNumberOfRounds.Enabled = false;
+            }
+        }
+
+        private void checkBoxEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxPAR.Enabled = true;
+            textBoxHMCR.Enabled = true;
+            textBoxHMCR.Enabled = true;
+            textBoxHMMatrixSize.Enabled = true;
+            textBoxBW.Enabled = true;
+            textBoxNumberOfRounds.Enabled = true;
         }
     }
 }
