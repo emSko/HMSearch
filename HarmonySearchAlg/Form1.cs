@@ -23,6 +23,7 @@ namespace HarmonySearchAlg
             HideControls();
             ObjFunctionParser obj = new ObjFunctionParser(textBoxFunction.Text);
             variables = obj.getDesignVariables();
+            variables.Sort();
             amountOfVariables = variables.Count();
 
             for (int i=1; i<=variables.Count; i++)

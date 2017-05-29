@@ -39,7 +39,7 @@ namespace HarmonySearchAlg
 
         public Algorithm(string objectiveFunction, int numberOfDesignVar, Dictionary<string, double> minValues, 
             Dictionary<string, double> maxValues, int numberOfRunds=50000, int HMMatrixSize=20,
-                            double HMCR=0.9,double PAR=0.35)
+                            double HMCR=0.9,double PAR=0.35, double bw=3)
         {
             this.numberOfDesignVar = numberOfDesignVar;
             this.objectiveFunction = objectiveFunction;
@@ -50,7 +50,7 @@ namespace HarmonySearchAlg
             this.PAR = PAR;
             this.minValues = new Dictionary<string, double>(minValues);
             this.maxValues = new Dictionary<string, double>(maxValues);
-            this.bw = 0.005;
+            this.bw = bw;
 
             functionParser = new ObjFunctionParser(this.objectiveFunction);
             functionParser.parseFunction();
@@ -84,14 +84,6 @@ namespace HarmonySearchAlg
                 sortHSMemory();
             }
         }
-
-        //public void logarithmTest()
-        //{
-        //    string formula = "x1+Log10(x1)*3+Log(2.718281828459,2.718281828459)";
-        //    var result = new Expression(formula);
-        //    result.Parameters["x1"] = 10;
-        //    var tmp = Convert.ToDouble(result.Evaluate());
-        //}
 
         public Dictionary<string, double> newValueSelection()
         {

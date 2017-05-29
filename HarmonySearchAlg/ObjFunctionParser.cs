@@ -19,6 +19,8 @@ namespace HarmonySearchAlg
 
         public string parseFunction()
         {
+            this.function = replaceExpFunction();
+            this.function = replaceAbsFunction();
             this.function = replaceTrigFunctions();
             this.function = replaceLogarithmsWithValues();
             this.function = removePow();
@@ -158,7 +160,7 @@ namespace HarmonySearchAlg
                         int op = signIndex.Max();
                         x = temp.Substring(op+1);
                     } while (x == "Pow"|| x=="Log"|| x=="Sin"|| x == "Cos"|| x == "Asin"||
-                    x == "Acos"|| x == "Tan"|| x == "Atan");
+                    x == "Acos"|| x == "Tan"|| x == "Atan" || x == "Exp");
                     if (position != 0)
                     {
                         f = result.Substring(position);
@@ -238,6 +240,51 @@ namespace HarmonySearchAlg
             {
                 result = result.Replace(v,trigFunc[v]);
             }
+            return result;
+        }
+
+        public string replaceExpFunction()
+        {
+            string result = this.function;
+            result = result.Replace("exp", "Exp");
+            return result;
+        }
+
+        public string replaceAbsFunction()
+        {
+            string result = this.function;
+            if (result.Contains("|"))
+            {
+                int i=0;
+                bool isFront = true;
+                while ((i = result.IndexOf('|', i)) != -1)
+                {
+                    // Print out the substring.
+                    if (isFront)
+                    {
+                        if(i!=0)
+                        {
+                            string x = result.Substring(0, i);
+                            result = x + "Abs(" + result.Substring(i + 1);
+                        }
+                        else 
+                            result ="Abs(" + result.Substring(i + 1);
+                    }
+                    else
+                    {
+                        string x = result.Substring(0, i) + ")";
+                        if (i != result.Length - 1)
+                        
+                            result = x + result.Substring(i + 1);
+                        else
+                            result = x;
+                           
+                    }
+                    isFront = !isFront;
+                }
+
+            }
+
             return result;
         }
 
