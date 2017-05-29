@@ -62,7 +62,7 @@ namespace HarmonySearchAlg
         public void drawSurfacePlot()
         {
             Plotting_Form1 plot = new Plotting_Form1(ref functionParser);
-            plot.drawSurfacePlot(minValues, maxValues, vars);
+            plot.drawSurfacePlot(minValues, maxValues, functionParser.getDesignVariables());
             plot.Show();
         }
 
