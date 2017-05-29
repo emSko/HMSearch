@@ -121,7 +121,6 @@ namespace HarmonySearchAlg
             }
 
             algorithm = new Algorithm(textBoxFunction.Text, amountOfVariables, minValues, maxValues, this.numberOfRounds, this.HMMatrixSize, this.HMCR, this.PAR, this.bw);
-            algorithm.InitializeHSM();
             if(variables.Count()==2)
             {
                 button1.Show();
