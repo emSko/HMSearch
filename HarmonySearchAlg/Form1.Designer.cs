@@ -108,7 +108,7 @@
             this.textBoxFunction.Name = "textBoxFunction";
             this.textBoxFunction.Size = new System.Drawing.Size(435, 109);
             this.textBoxFunction.TabIndex = 0;
-            this.textBoxFunction.Text = "x1+x2";
+            this.textBoxFunction.Text = "-20*exp(-0.2*(0.5*(x1^2+x2^2))^0.5)-exp(0.5*(cos(2*pi*x1)+cos(2*pi*x2)))+e+20";
             // 
             // buttonEnterFunction
             // 

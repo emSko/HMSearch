@@ -75,26 +75,32 @@ namespace HarmonySearchAlg
             ILArray<double> X = xValues.ToArray();
             ILArray<double> Y = yValues.ToArray();
             ILArray<double> Z = zValues.ToArray();
-            X = X.Reshape(2, (range*range)/2);
+            X = X.Reshape(2, (range * range) / 2);
             Y = Y.Reshape(2, (range * range) / 2);
             Z = Z.Reshape(2, (range * range) / 2);
 
+            //var asd = new Expression("Math.Pow(x,2)-y*Math.Log10(y)").Evaluate();
+            //var a = Convert.ToDouble(asd);
 
             // setup the plot (modify as needed)
             ilPanel1.Scene.Add(new ILPlotCube(twoDMode: false) {
-                    new ILSurface(Z,X,Y,
-
+                    new ILSurface(//Z,X,Y,
       ///////////////////////////////////////////////////// tutaj wzór funkcji
-      //(x, y) => (float)(Math.Pow(x,2)-y*Math.Log10(y)),
-
+      (x, y) => (float)(-20*Math.Exp(-0.2*Math.Pow((0.5*(Math.Pow(x,2)+Math.Pow(y,2))),0.5))-Math.Exp(0.5*(Math.Cos(2*3.14159265359*x)+Math.Cos(2*3.14159265359*y)))+2.718281828459+20),
+      
       //////////////////////////////////////////////////// tutaj zakres zmiennych
-      // xmin: -2, xmax: 1,
-      // ymin: -1, ymax: 3,
+       xmin: -5, xmax: 5,
+       ymin: -5, ymax: 5,
        colormap: Colormaps.ILNumerics) {
           new ILColorbar()
     }
-        });
-
+        } );
+            //var p2 = ilPanel1.Scene.Camera.Add(new ILPoints
+            //{
+            //    Tag = "myPoints2",
+            //    Size = 10,
+            //    Color = Color.Black
+            //});
         }
     }
 }
